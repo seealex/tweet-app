@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +17,7 @@ export class TweetService {
   get<T>(url: string) {
     return this.http.get<T>(`${this.config.api}${url}`)
       .pipe(
-        tap( // Log the result or error
-          //data => this.log(filename, data),
-         // error => this.logError(filename, error)
-        )
+        retry(2)
       );
   }
 }

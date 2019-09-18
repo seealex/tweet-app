@@ -6,18 +6,18 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <mat-form-field class="example-full-width">
-            <input type="text" matInput formControlName="username" placeholder="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <input type="text" matInput formControlName="username" placeholder="Nome" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
         </mat-form-field>
         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+            <div *ngIf="f.username.errors.required">Nome obrigatório</div>
         </div>
     </div>
     <div class="form-group">        
         <mat-form-field class="example-full-width">
-            <input type="password" matInput formControlName="password" placeholder="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <input type="password" matInput formControlName="password" placeholder="Senha" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
         </mat-form-field>
         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.required">Senha obirgatória</div>
         </div>
     </div>
 </form>

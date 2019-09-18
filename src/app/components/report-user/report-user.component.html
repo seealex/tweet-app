@@ -2,23 +2,23 @@
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- Position Column -->
     <ng-container matColumnDef="tweets">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> tweets </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tweets </th>
       <td mat-cell *matCellDef="let element"> {{element.tweets}} </td>
     </ng-container>
   
     <!-- Name Column -->
     <ng-container matColumnDef="hastTag">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> hastTag </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> HastTag </th>
       <td mat-cell *matCellDef="let element"> {{element.hastTag}} </td>
     </ng-container>
   
     <ng-container matColumnDef="idiom">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> idiom </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Idioma </th>
       <td mat-cell *matCellDef="let element"> {{element.idiom}} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
     
