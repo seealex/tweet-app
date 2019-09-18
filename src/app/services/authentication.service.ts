@@ -10,18 +10,18 @@ import { map } from 'rxjs/operators';
 })
 export class AuthenticationService {
 
-    private currentUserSubject: BehaviorSubject<any>;
-    public currentUser: Observable<UserModel>;
+    private currentTokenSubject: BehaviorSubject<any>;
+    public currentToken: Observable<any>;
     private config;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('token')));
-        this.currentUser = this.currentUserSubject.asObservable();
+        this.currentTokenSubject = new BehaviorSubject<any>(localStorage.getItem('token'));
+        this.currentToken = this.currentTokenSubject.asObservable();
         this.config = environment;
     }
 
-    public get currentUserValue(): any {
-        return this.currentUserSubject.value;
+    public get currentTokenValue(): any {
+        return this.currentTokenSubject.value;
     }
 
     login() {
@@ -38,13 +38,14 @@ export class AuthenticationService {
     const body = new HttpParams().set('grant_type', 'client_credentials');
 
 
-      return this.http.post<any>('http://alexsantosilva-eval-test.apigee.net/oauth/accesstoken', body, {headers})
+      return this.http.post<any>('http://alexsantosilva-eval-test.apigee.net/token', body, {headers})
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
+        console.log(user);
         if (user && user.access_token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('token', user.access_token);
-            this.currentUserSubject.next(user);
+            this.currentTokenSubject.next(user);
         }
 
         return user;
@@ -52,8 +53,13 @@ export class AuthenticationService {
     }
 
     logout() {
-        // remove user from local storage to log user out
+      return new Observable(observer => {
         localStorage.removeItem('token');
-        this.currentUserSubject.next(null);
+        this.currentTokenSubject.next(null);
+        setTimeout(() => {
+            observer.next(null);
+        }, 1000);
+      });
+        
     }
 }

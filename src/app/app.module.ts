@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ReactiveFormsModule }    from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material';
 import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDividerModule} from '@angular/material/divider';
 import {MatTabsModule} from '@angular/material/tabs'
 
 
@@ -24,6 +25,7 @@ import { ReportUserComponent } from './components/report-user/report-user.compon
 import { ReportTopFiveComponent } from './components/report-top-five/report-top-five.component';
 import { ReportHourDayComponent } from './components/report-hour-day/report-hour-day.component';
 import { MainTabComponent } from './components/main-tab/main-tab.component';
+import { TokenInterceptor } from './utils/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { MainTabComponent } from './components/main-tab/main-tab.component';
     MatTabsModule,
     MatToolbarModule,
     MatGridListModule,
+    MatDividerModule,
     MatIconModule, 
     MatSidenavModule, 
     MatListModule, 
@@ -54,7 +57,9 @@ import { MainTabComponent } from './components/main-tab/main-tab.component';
     BrowserAnimationsModule,
     routing
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

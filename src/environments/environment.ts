@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: "http://localhost:3000/tweet"
+  //api: "http://localhost:3000/tweet"
+  api: 'http://alexsantosilva-eval-test.apigee.net/tweeit-api'
   
 };
 
