@@ -27,9 +27,9 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
-        //if (this.authenticationService.currentUserValue) { 
-        //    this.router.navigate(['/']);
-        //}
+        if (this.authenticationService.currentUserValue) { 
+            this.router.navigate(['home']);
+        }
     }
 
     ngOnInit() {
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }
 
-    onSubmit() {
+    login() {
         this.submitted = true;
 
         // stop here if form is invalid
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        /*this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.authenticationService.login()
             .pipe(first())
             .subscribe(
                 data => {
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
-                */
+        
     }
 
 }

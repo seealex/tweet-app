@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { TweetCountByHourOfDayVO } from 'src/app/models/tweet-count-hour-day';
-
-
-const ELEMENT_DATA: TweetCountByHourOfDayVO[] = [
-  {date: 'Hydrogen', amount: 5},
-  {date: 'Helium', amount: 15 }
-];
+import { UserTopFiveWithMoreFollowersModel } from 'src/app/models/user-top-five-followers';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { TweetService } from 'src/app/services/tweet.service';
 
 @Component({
   selector: 'app-report-top-five',
@@ -14,12 +10,22 @@ const ELEMENT_DATA: TweetCountByHourOfDayVO[] = [
   styleUrls: ['./report-top-five.component.css']
 })
 export class ReportTopFiveComponent implements OnInit {
-  displayedColumns: string[] = ['date', 'amount'];
-  dataSource = ELEMENT_DATA;
+  dataSource: MatTableDataSource<UserTopFiveWithMoreFollowersModel>;
 
-  constructor() { }
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  
+  displayedColumns: string[] = ['id', 'screenName', 'followers'];
+
+  constructor(private tweetService: TweetService) { }
 
   ngOnInit() {
+    
+    this.tweetService.get<UserTopFiveWithMoreFollowersModel[]>('/topFive')
+    .subscribe(results => {
+      this.dataSource = new MatTableDataSource(results);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
-
 }

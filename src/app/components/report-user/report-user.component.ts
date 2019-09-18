@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { TweetCountByHourOfDayVO } from 'src/app/models/tweet-count-hour-day';
-
-
-const ELEMENT_DATA: TweetCountByHourOfDayVO[] = [
-  {date: 'Hydrogen', amount: 5},
-  {date: 'Helium', amount: 15 }
-];
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { TweetByTagByUserIdiomModel } from 'src/app/models/tweet-tag-user-idiom';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { TweetService } from 'src/app/services/tweet.service';
 
 @Component({
   selector: 'app-report-user',
@@ -13,12 +9,23 @@ const ELEMENT_DATA: TweetCountByHourOfDayVO[] = [
   styleUrls: ['./report-user.component.css']
 })
 export class ReportUserComponent implements OnInit {
-  displayedColumns: string[] = ['date', 'amount'];
-  dataSource = ELEMENT_DATA;
+  dataSource: MatTableDataSource<TweetByTagByUserIdiomModel>;
 
-  constructor() { }
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  displayedColumns: string[] = ['tweets', 'hastTag', 'idiom', 'name'];
+
+  constructor(private tweetService: TweetService) { }
 
   ngOnInit() {
+    
+    this.tweetService.get<TweetByTagByUserIdiomModel[]>('/byUserIdiomCountry')
+    .subscribe(results => {
+      this.dataSource = new MatTableDataSource(results);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
 }
