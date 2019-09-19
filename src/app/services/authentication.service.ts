@@ -40,7 +40,7 @@ export class AuthenticationService {
       .pipe(map(user => {
         if (user && user.access_token) {
             localStorage.setItem('token', user.access_token);
-            this.currentTokenSubject.next(user);
+            this.currentTokenSubject.next(user.access_token);
         }
 
         return user;

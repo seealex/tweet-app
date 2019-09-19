@@ -14,7 +14,7 @@ export class ReportUserComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  displayedColumns: string[] = ['tweets', 'hastTag', 'idiom', 'name'];
+  displayedColumns: string[] = ['tweets', 'hastTag', 'idiom'];
 
   constructor(private tweetService: TweetService) { }
 
